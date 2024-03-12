@@ -1,5 +1,38 @@
 #!/bin/bash
 
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -t|--image-tag)
+      TAG="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -b|--cnoe-backstage-branch)
+      BRANCH="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
+done
+
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+
+TAG=${TAG:-backstage:latest}
+BRANCH=${BRANCH:-main}
+
+echo "IMAGE TAG = ${TAG}"
+echo "CNOE BACKSTAGE-APP BRANCH = ${BRANCH}"
+
 if [[ "$CNOE_DEBUG" -eq 1 ]]; then
   set -x
 fi
@@ -16,21 +49,15 @@ if [[ ! -d $root_dir/vendor/backstage ]]; then
     git clone https://github.com/cnoe-io/backstage-app.git $root_dir/vendor/backstage
     cp Dockerfile $root_dir/vendor/backstage
     cp .dockerignore $root_dir/vendor/backstage
-    
+
+    echo "Checking out branch $BRANCH for 'backstage-app'"
     cd $root_dir/vendor/backstage
-    git checkout k8s-apply
+    git checkout $BRANCH
 else
-  echo ""
   echo "!!!BACKSTAGE DIRECTORY $root_dir/vendor/backstage already exists. Please delete and re-run.!!!"
 fi
 
-
 cd $root_dir/vendor/backstage
 
-if [[ -z $1 ]]; then
-  echo "The docker image will be tagged: $1"
-  docker image build -t $1 .
-else
-  echo "Defaulting to image tag 'backstage'"
-  docker image build -t backstage .
-fi
+echo "The docker image will be tagged: $TAG"
+docker image build -t $TAG .
