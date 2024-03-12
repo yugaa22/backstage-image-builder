@@ -6,20 +6,32 @@ customizations applied.
 ## Build
 
 ```bash
-~ ./build-backstage-image.sh
+export BACKSTAGE_IMAGE_NAME=backstage-app
+export BACKSTAGE_IMAGE_TAG=latest
+
+./build-backstage-image.sh "$BACKSTAGE_IMAGE_NAME:$BACKSTAGE_IMAGE_TAG"
 ```
 
-## PUSH 
+## Examples
 
 To remote registry:
 
 ```bash
-~ docker push ghcr.io/cnoe-io/backstage-app:latest
+export BACKSTAGE_IMAGE_REGISTRY="ghcr.io/cnoe-io/"
+export BACKSTAGE_IMAGE_NAME=backstage-app
+export BACKSTAGE_IMAGE_TAG=latest
 
+./build-backstage-image.sh "$BACKSTAGE_IMAGE_REGISTRY$BACKSTAGE_IMAGE_NAME:$BACKSTAGE_IMAGE_TAG)"
+docker push "$BACKSTAGE_IMAGE_REGISTRY$BACKSTAGE_IMAGE_NAME:$BACKSTAGE_IMAGE_TAG"
 ```
 
 To local IDPBuilder hosted Gitea registry:
 
 ```bash
-~ docker push gitea.cnoe.localtest.me:8443/giteaadmin/backstage-app:latest
+export BACKSTAGE_IMAGE_REGISTRY="gitea.cnoe.localtest.me:8443/giteaadmin/"
+export BACKSTAGE_IMAGE_NAME=backstage-app
+export BACKSTAGE_IMAGE_TAG=latest
+
+./build-backstage-image.sh "$BACKSTAGE_IMAGE_REGISTRY$BACKSTAGE_IMAGE_NAME:$BACKSTAGE_IMAGE_TAG)"
+docker push "$BACKSTAGE_IMAGE_REGISTRY$BACKSTAGE_IMAGE_NAME:$BACKSTAGE_IMAGE_TAG"
 ```

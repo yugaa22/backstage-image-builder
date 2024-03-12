@@ -24,5 +24,12 @@ else
   echo "!!!BACKSTAGE DIRECTORY $root_dir/vendor/backstage already exists. Please delete and re-run.!!!"
 fi
 
+
 cd $root_dir/vendor/backstage
-docker image build -t ghcr.io/cnoe-io/backstage-app .
+
+if [[ -z $1 ]]; then
+  echo "The docker image will be tagged: $1"
+  docker image build -t $1 .
+else
+  docker image build -t backstage .
+fi
