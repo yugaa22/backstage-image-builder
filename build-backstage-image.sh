@@ -31,5 +31,6 @@ if [[ -z $1 ]]; then
   echo "The docker image will be tagged: $1"
   docker image build -t $1 .
 else
+  echo "Defaulting to image tag 'backstage'"
   docker image build -t backstage .
 fi
