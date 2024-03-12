@@ -83,8 +83,11 @@ RUN curl -L -O https://github.com/cnoe-io/cnoe-cli/releases/download/v0.1.0/cnoe
     curl -L -O https://github.com/cnoe-io/cnoe-cli/releases/download/v0.1.0/checksums.txt && \
     sha256sum -c --strict --status --ignore-missing checksums.txt && \
     tar -xzf cnoe_Linux_x86_64.tar.gz && \
-    mv cnoe /usr/bin/cnoe && \
-    chmod +x /usr/bin/cnoe
+    mv cnoe /usr/bin/cnoe-cli && \
+    chmod +x /usr/bin/cnoe-cli
+
+COPY ./cnoe-wrapper.sh /usr/bin/cnoe
+RUN chmod +x /usr/bin/cnoe
 
 # From here on we use the least-privileged `node` user to run the backend.
 USER node

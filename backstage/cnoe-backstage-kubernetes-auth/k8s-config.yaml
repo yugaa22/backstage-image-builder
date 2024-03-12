@@ -1,9 +1,0 @@
-type: 'config'
-clusters:
-  - url: ${UCP_API_URL}
-    caData: ${UCP_CA_DATA}
-    name: UCP
-    authProvider: serviceAccount
-    skipTLSVerify: true
-    skipMetricsLookup: true
-    serviceAccountToken: ${BACKSTAGE_SA_TOKEN}

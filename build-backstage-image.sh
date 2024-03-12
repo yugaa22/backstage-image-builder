@@ -47,8 +47,6 @@ mkdir -p $root_dir/vendor
 if [[ ! -d $root_dir/vendor/backstage ]]; then
     mkdir $root_dir/vendor/backstage
     git clone https://github.com/cnoe-io/backstage-app.git $root_dir/vendor/backstage
-    cp Dockerfile $root_dir/vendor/backstage
-    cp .dockerignore $root_dir/vendor/backstage
 
     echo "Checking out branch $BRANCH for 'backstage-app'"
     cd $root_dir/vendor/backstage
@@ -56,6 +54,10 @@ if [[ ! -d $root_dir/vendor/backstage ]]; then
 else
   echo "!!!BACKSTAGE DIRECTORY $root_dir/vendor/backstage already exists. Please delete and re-run.!!!"
 fi
+
+cp Dockerfile $root_dir/vendor/backstage
+cp .dockerignore $root_dir/vendor/backstage
+cp cnoe-wrapper.sh $root_dir/vendor/backstage
 
 cd $root_dir/vendor/backstage
 
