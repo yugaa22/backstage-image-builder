@@ -55,6 +55,8 @@ else
   echo "!!!BACKSTAGE DIRECTORY $root_dir/vendor/backstage already exists. Please delete and re-run.!!!"
 fi
 
+cd $root_dir
+
 cp Dockerfile $root_dir/vendor/backstage
 cp .dockerignore $root_dir/vendor/backstage
 cp cnoe-wrapper.sh $root_dir/vendor/backstage
